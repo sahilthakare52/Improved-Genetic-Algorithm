@@ -43,18 +43,24 @@ print("Dividing the population into tournament participants ...........\n")
 
 
 os.system("cat mydata.txt | grep Memory | cut -d 'I' -f1| sort | tee Memory.txt >/dev/null 2>&1")
+os.system("cat mydata.txt | grep Memory | sort | tee ip_add.txt >/dev/null 2>&1")
 
 def update_next_iteration(selections):
         fil=open("next_iteration_list.txt", "a")
         fil.write(selections + "\n")
         fil.close
 
-def tourament_func(n):
+
+def tourament_func(n, filename):
     for i, j in itertools.zip_longest(range(0, 10, 2), range(1,10,2)):
-      with open("Memory.txt") as f:
+      with open(filename) as f:
        firstline = f.readlines()[i].rstrip()
-      with open("Memory.txt") as f:
+      with open("ip_add.txt") as f:
+       firstline_ip_add = f.readlines()[i].rstrip()
+      with open(filename) as f:
        secondline = f.readlines()[j].rstrip()
+      with open("ip_add.txt") as f:
+       secondline_ip_add = f.readlines()[j].rstrip()
        print(firstline)
        print(secondline)
 
@@ -63,15 +69,18 @@ def tourament_func(n):
        print ("Running tournament --> iteration {}".format(n))
        if firstline>secondline:
           print("Memory  utilisation for server {} is greater than server {}\n Server {} is selected".format(i, j, j))
-          update_next_iteration(secondline)
+          update_next_iteration(secondline_ip_add)
        elif firstline<secondline:
           print("Memory  utilisation for server {} is less than server {}\n Server {} is Selected ".format(i, j, i))
-          update_next_iteration(firstline)
+          update_next_iteration(firstline_ip_add)
        else:
           print("Memory  utilisation for server {} is equal to server {}\n Server will be selected randomly".format(i, j))
-          update_next_iteration(firstline)
+          update_next_iteration(firstline_ip_add)
        print ("==========================================")
  
-tourament_func(1)
+tourament_func(1, "Memory.txt")
+
+print ("Selected servers for next iteration")
+os.system("cat next_iteration_list.txt")
 
 
