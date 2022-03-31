@@ -1,0 +1,20 @@
+ip-172-31-83-156
+  Memory usage: 46%               IPv4 address for eth0: 172.31.83.156
+ip-172-31-90-131
+  Memory usage: 30%               IPv4 address for eth0: 172.31.90.131
+ip-172-31-93-35
+  Memory usage: 25%               IPv4 address for eth0: 172.31.93.35
+ip-172-31-92-245
+  Memory usage: 26%               IPv4 address for eth0: 172.31.92.245
+ip-172-31-83-218
+  Memory usage: 27%               IPv4 address for eth0: 172.31.83.218
+ip-172-31-81-73
+  Memory usage: 21%               IPv4 address for eth0: 172.31.81.73
+ip-172-31-92-28
+  Memory usage: 21%               IPv4 address for eth0: 172.31.92.28
+ip-172-31-80-163
+  Memory usage: 21%               IPv4 address for eth0: 172.31.80.163
+ip-172-31-92-78
+  Memory usage: 21%               IPv4 address for eth0: 172.31.92.78
+ip-172-31-88-79
+  Memory usage: 21%               IPv4 address for eth0: 172.31.88.79
