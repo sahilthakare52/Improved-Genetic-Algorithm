@@ -1,0 +1,5 @@
+  Memory usage: 21%
+  Memory usage: 21%
+  Memory usage: 24%
+  Memory usage: 26%
+  Memory usage: 27%
