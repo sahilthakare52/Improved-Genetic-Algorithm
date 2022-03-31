@@ -4,7 +4,7 @@ import itertools
 
 print ( "Gathering the system resource information........\n ==============#################===============" )
 
-data = os.system(" echo '' > mydata.txt; for i in `cat servers.txt`;do ssh -i /Users/sahilthakare/Downloads/projectnetworkplanning.pem ubuntu@$i 'hostname && sudo sh /etc/update-motd.d/50-landscape-sysinfo' ; echo '====='; done | tee mydata.txt ")
+data = os.system(" echo '' > mydata.txt; for i in `cat servers.txt`;do ssh  ubuntu@$i 'hostname && sudo sh /etc/update-motd.d/50-landscape-sysinfo' ; echo '====='; done | tee mydata.txt ")
 
 print(" Fetching the current memory utilisation..........\n")
 
@@ -16,7 +16,7 @@ print("==============#################===============")
 
 print("Sorting algorithm -- preparing the list as per lowest first............\n")
 
-os.system("cat mydata.txt|grep Memory| sort | tee Memory.txt")
+os.system("cat mydata.txt | grep Memory | cut -d 'I' -f1| sort | tee Memory.txt")
 
 print("==============#################===============")
 
@@ -31,11 +31,13 @@ print("First Generation - Parents...........\n")
 
 population = os.system("cat servers.txt |wc -l")
 
-print("The hosts in the selected population is:" , population+1)
+print("The hosts in the selected population is: {} ".format(population))
 
 print("==============#################===============")
 
 print("Dividing the population into tournament participants ...........\n")
+
+#os.system("cat Memory.txt|cut -d "IPv" -f1 > Memory.txt")
 
 for i, j in itertools.zip_longest(range(0, 10, 2), range(1,10,2)):
     with open("Memory.txt") as f:
