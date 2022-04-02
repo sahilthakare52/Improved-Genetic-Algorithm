@@ -3,7 +3,7 @@ import itertools
 
 print ( "Gathering the system resource information........\n ==============#################===============" )
 
-os.system("rm  Next_iteration*.txt >/dev/null 2>&1")
+os.system("rm  Next_iteration*.txt>/dev/null 2>&1")
 
 data = os.system(" echo '' > mydata.txt; for i in `cat servers.txt`;do ssh  ubuntu@$i 'hostname && sudo sh /etc/update-motd.d/50-landscape-sysinfo' ; echo '====='; done | tee mydata.txt ")
 
@@ -15,20 +15,27 @@ os.system("cat mydata.txt|grep Memory")
 
 print("==============#################===============")
 
+print("Sorting algorithm -- preparing the list as per lowest first............\n")
 
-print("==============#################===============")
+os.system("cat mydata.txt | grep Memory | sort | tee Sorted.txt")
 
-print("Starting the algorithm, choosing the population..............\n")
+print ("=====================================")
 
-os.system("cat servers.txt")
+print("Discarding the ~half of the population to improve speed")
 
-print("\n==============#################===============")
+print("Using Ranking algorithm.... ")
+
+os.system("divide=$(cat Sorted.txt | wc -l); cat Sorted.txt| head -n $(( $divide / 2 )) > Memory_discarded.txt")
+
+os.system("cat Memory_discarded.txt")
+
+print ("=====================================")
 
 print("Iteration - 1 ................. Starting\n ")
 print("First Generation - Parents...........\n")
 
 
-count = len(open("servers.txt").readlines())
+count = len(open("Memory_discarded.txt").readlines())
 
 print("The hosts in the selected population is: {} ".format(count))
 
@@ -36,8 +43,8 @@ print("==============#################===============")
 
 print("Dividing the population into tournament participants ...........\n")
 
-os.system("cat mydata.txt | grep Memory | cut -d 'I' -f1| tee Memory.txt >/dev/null 2>&1")
-os.system("cat mydata.txt | grep Memory | tee ip_add.txt >/dev/null 2>&1")
+os.system("cat Memory_discarded.txt | grep Memory | cut -d 'I' -f1| tee Memory.txt >/dev/null 2>&1")
+os.system("cat Memory_discarded.txt | grep Memory | tee ip_add.txt >/dev/null 2>&1")
 
 def update_next_iteration(selections, nextiteration):
         fil=open(nextiteration, "a")
@@ -74,7 +81,7 @@ def tourament_func(n, filename, updatedip, nextiteration):
           update_next_iteration(firstline_ip_add, nextiteration)
       print ("==========================================")
  
-tourament_func(1, "Memory.txt", "ip_add.txt", "Next_iteration1.txt")
+tourament_func(1, "Memory_discarded.txt", "ip_add.txt", "Next_iteration1.txt")
 
 print ("Selected servers for next iteration")
 os.system("cat Next_iteration1.txt")
@@ -96,21 +103,11 @@ print ("Starting Next iteration..........")
 
 count = len(open("Next_iteration2.txt").readlines())
 
-tourament_func(2, "Next_iteration2.txt", "Next_iteration2.txt", "Next_iteration3.txt")
-
-print ("Selected servers for next iteration")
-os.system("cat Next_iteration3.txt")
+tourament_func(3, "Next_iteration2.txt", "Next_iteration2.txt", "Next_iteration3.txt")
 
 print ("==========================================")
 
-print ("Starting Next iteration..........")
-
-count = len(open("Next_iteration3.txt").readlines())
-
-tourament_func(2, "Next_iteration3.txt", "Next_iteration3.txt", "Next_iteration4.txt")
-
 print ("selected server.........")
 
-
 print("####################################\n#######Final-selected-server################")
-os.system("cat Next_iteration4.txt")
+os.system("cat Next_iteration3.txt")
