@@ -1,5 +1,7 @@
 import os
 import itertools
+import time
+startTime = time.time()
 
 print ( "Gathering the system resource information........\n ==============#################===============" )
 
@@ -111,3 +113,6 @@ print ("selected server.........")
 
 print("####################################\n#######Final-selected-server################")
 os.system("cat Next_iteration3.txt")
+
+executionTime = (time.time() - startTime)
+print('Execution time in seconds: ' + str(executionTime))
