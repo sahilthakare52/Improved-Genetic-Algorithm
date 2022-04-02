@@ -1,10 +1,10 @@
-  Memory usage: 21%               
-  Memory usage: 21%               
-  Memory usage: 21%               
+  Memory usage: 49%               
+  Memory usage: 22%               
+  Memory usage: 28%               
   Memory usage: 22%               
   Memory usage: 24%               
-  Memory usage: 29%               
-  Memory usage: 30%               
-  Memory usage: 30%               
-  Memory usage: 31%               
-  Memory usage: 49%               
+  Memory usage: 24%               
+  Memory usage: 24%               
+  Memory usage: 26%               
+  Memory usage: 24%               
+  Memory usage: 21%               
