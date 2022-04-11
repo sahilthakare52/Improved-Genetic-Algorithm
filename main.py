@@ -7,7 +7,7 @@ print ( "Gathering the system resource information........\n ==============#####
 
 os.system("rm  Next_iteration*.txt>/dev/null 2>&1")
 
-data = os.system(" echo '' > mydata.txt; for i in `cat servers.txt`;do ssh  ubuntu@$i 'hostname && sudo sh /etc/update-motd.d/50-landscape-sysinfo' ; echo '====='; done | tee mydata.txt ")
+data = os.system(" echo '' > mydata.txt; for i in `cat servers.txt`;do ssh -o StrictHostKeyChecking=no ubuntu@$i 'hostname && sudo sh /etc/update-motd.d/50-landscape-sysinfo' ; echo '====='; done | tee mydata.txt ")
 
 print(" Fetching the current memory utilisation..........\n")
 
@@ -67,23 +67,23 @@ def tourament_func(n, filename, updatedip, nextiteration):
         secondline = f.readlines()[j].rstrip()
        with open(updatedip) as f:
         secondline_ip_add = f.readlines()[j].rstrip()
-      print(firstline)
-      print(secondline)
+        print(firstline)
+        print(secondline)
 
-      print ("======================")
+        print ("======================")
 
-      print ("Running tournament --> iteration {}".format(n))
-      print ("Applying Crossover and selecting new child from available parents.......")
-      if firstline>secondline:
-          print("Memory  utilisation for server {} is greater than server {}\n Server {} is selected".format(i, j, j))
-          update_next_iteration(secondline_ip_add, nextiteration)
-      elif firstline<secondline:
-          print("Memory  utilisation for server {} is less than server {}\n Server {} is Selected ".format(i, j, i))
-          update_next_iteration(firstline_ip_add, nextiteration)
-      else:
-          print("Memory  utilisation for server {} is equal to server {}\n Server will be selected randomly".format(i, j))
-          update_next_iteration(firstline_ip_add, nextiteration)
-      print ("==========================================")
+        print ("Running tournament --> iteration {}".format(n))
+        print ("Applying Crossover and selecting new child from available parents.......")
+        if firstline>secondline:
+           print("Memory  utilisation for server {} is greater than server {}\n Server {} is selected".format(i, j, j))
+           update_next_iteration(secondline_ip_add, nextiteration)
+        elif firstline<secondline:
+           print("Memory  utilisation for server {} is less than server {}\n Server {} is Selected ".format(i, j, i))
+           update_next_iteration(firstline_ip_add, nextiteration)
+        elif firstline==secondline:
+           print("Memory  utilisation for server {} is equal to server {}\n Server will be selected randomly".format(i, j))
+           update_next_iteration(firstline_ip_add, nextiteration)
+        print ("==========================================")
  
 tourament_func(1, "Memory_discarded.txt", "ip_add.txt", "Next_iteration1.txt")
 
@@ -103,18 +103,28 @@ os.system("cat Next_iteration2.txt")
 
 print ("==========================================")
 
-print ("Starting Next iteration..........")
+#print ("Starting Next iteration..........")
 
 count = len(open("Next_iteration2.txt").readlines())
 
-tourament_func(3, "Next_iteration2.txt", "Next_iteration2.txt", "Next_iteration3.txt")
+#tourament_func(3, "Next_iteration2.txt", "Next_iteration2.txt", "Next_iteration3.txt")
 
-print ("==========================================")
+#print ("==========================================")
 
-print ("selected server.........")
+#print ("Starting Next iteration..........")		
+#count = len(open("Next_iteration3.txt").readlines())		print("####################################\n#######Final-selected-server################")
+#os.system("cat Next_iteration3.txt")
 
-print("####################################\n#######Final-selected-server################")
-os.system("cat Next_iteration3.txt")
+if count>1:		
+    tourament_func(3, "Next_iteration2.txt", "Next_iteration2.txt", "Next_iteration3.txt")		
+    print ("selected server.........")		
+    print("####################################\n#######Final-selected-server################")		
+    os.system("cat Next_iteration3.txt")		
+else:		
+    print ("selected server.........")		
+    print("####################################\n#######Final-selected-server################")		
+    os.system("cat Next_iteration2.txt")
+
 
 executionTime = (time.time() - startTime)
 print('Execution time in seconds: ' + str(executionTime))
