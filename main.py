@@ -48,6 +48,7 @@ print("Dividing the population into tournament participants ...........\n")
 os.system("cat Memory_discarded.txt | grep Memory | cut -d 'I' -f1| tee Memory.txt >/dev/null 2>&1")
 os.system("cat Memory_discarded.txt | grep Memory | tee ip_add.txt >/dev/null 2>&1")
 
+
 def update_next_iteration(selections, nextiteration):
         fil=open(nextiteration, "a")
         fil.write(selections + "\n")
@@ -72,6 +73,7 @@ def tourament_func(n, filename, updatedip, nextiteration):
       print ("======================")
 
       print ("Running tournament --> iteration {}".format(n))
+      print ("Applying Crossover and selecting new child from available parents.......")
       if firstline>secondline:
           print("Memory  utilisation for server {} is greater than server {}\n Server {} is selected".format(i, j, j))
           update_next_iteration(secondline_ip_add, nextiteration)
